@@ -1,10 +1,18 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 
 public class Ex2_1{
+    // delete all files in fileNames array
+    public static void deleteFiles(String[] fileNames){
+        for(int i = 0; i < fileNames.length; i++){
+            File file = new File(fileNames[i]);
+            file.delete();
+        }
+    }
     /**
      * Creates n text files with random numbers in each file, returns the file names in an array
      * @param n - number of files to create
@@ -14,15 +22,15 @@ public class Ex2_1{
      */
     public static String[] createTextFiles(int n, int seed, int bound){
         String[] fileNames = new String[n];
+        Random rand = new Random(seed);
         for(int i = 0; i < n; i++){
             try{
                 fileNames[i] = "file" + i + ".txt";
-                    PrintWriter writer = new PrintWriter(fileNames[i], "UTF-8");
-                    Random rand = new Random(seed);
-                    for(int j = 0; j < bound; j++){
-                        writer.println(rand.nextInt());
-                    }
-                    writer.close();
+                PrintWriter writer = new PrintWriter(fileNames[i], "UTF-8");
+                for(int j = 0; j < rand.nextInt(bound); j++){
+                    writer.println("hello world!");
+                }
+                writer.close();
             }catch(IOException e){
                 System.out.println("Error: " + e);
             }
@@ -54,5 +62,7 @@ public class Ex2_1{
         for(int i = 0; i < fileNames.length; i++){
             System.out.println(fileNames[i]);
         }
+        System.out.println("Number of lines: " + getNumOfLines(fileNames));
+        deleteFiles(fileNames);
     }
 }
