@@ -1,12 +1,12 @@
+package Ex2_1;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.Provider.Service;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
 
@@ -87,23 +87,29 @@ public class Ex2_1 {
         return countLines;
     }
 
+    /**
+     * computes number of lines in files using threadpool
+     * 
+     * @param fileNames
+     * @return number ines
+     */
     public static int getNumOfLinesThreadPool(String[] fileNames) {
         int countLines = 0;
-        ExecutorService threadPool1 = new ThreadPoolExecutor(3, 5,
-                0, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(fileNames.length));
-
-        for (int i = 0; i < fileNames.length; i++) {
-            Future<Integer> task = threadPool1.submit(new numOfLinesThreadPool(fileNames[i]));
-            // threadPool1.submit();
-            try {
-                countLines += task.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+        try (ExecutorService threadPool1 = new ThreadPoolExecutor(3, 5,
+                0, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(fileNames.length))) {
+            for (int i = 0; i < fileNames.length; i++) {
+                Future<Integer> task = threadPool1.submit(new numOfLinesThreadPool(fileNames[i]));
+                try {
+                    countLines += task.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
+            threadPool1.shutdown();
         }
-        threadPool1.shutdown();
+
         return countLines;
     }
 
