@@ -5,19 +5,19 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 
 public class numOfLinesThreadPool implements Callable<Integer> {
-    private String fileName;
+    private final String fileName;
 
     /**
      * Constructor
      * 
-     * @param fileName
+     * @param fileName- the file's name.
      */
     public numOfLinesThreadPool(String fileName) {
         this.fileName = fileName;
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         int numOfLines = 0;
         String fileName = this.fileName;
         try {

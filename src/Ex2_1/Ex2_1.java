@@ -11,21 +11,13 @@ import java.util.Random;
 import java.util.concurrent.*;
 
 public class Ex2_1 {
-    // delete all files in fileNames array
-    public static void deleteFiles(String[] fileNames) {
-        for (int i = 0; i < fileNames.length; i++) {
-            File file = new File(fileNames[i]);
-            file.delete();
-        }
-    }
-
     /**
-     * Creates n text files with random numbers in each file, returns the file names
-     * in an array
+     * Creates n text files with random numbers of rows in each file,
+     * and returns the files' names in a String array.
      * 
-     * @param n     - number of files to create
-     * @param seed  - seed for random number generator
-     * @param bound - upper bound for random number generator
+     * @param n     - number of files to create.
+     * @param seed  - seed for random number generator.
+     * @param bound - upper bound for random number generator.
      * @return fileNames
      */
     public static String[] createTextFiles(int n, int seed, int bound) {
@@ -34,9 +26,9 @@ public class Ex2_1 {
         for (int i = 0; i < n; i++) {
             try {
                 fileNames[i] = "file_" + i + ".txt";
-                PrintWriter writer = new PrintWriter(fileNames[i], "UTF-8");
+                PrintWriter writer = new PrintWriter(fileNames[i]);
                 int numOfRand = rand.nextInt(bound);
-                System.out.println(numOfRand);
+                System.out.println("Rows in " + fileNames[i] + ": "+numOfRand);
                 for (int j = 0; j < numOfRand; j++) {
                     writer.println("hello world!");
                 }
@@ -49,16 +41,16 @@ public class Ex2_1 {
     }
 
     /**
-     * Returns the number of lines in the files in fileNames array
+     * Returns the number of lines in the files in "fileNames" array.
      * 
-     * @param fileNames - array of file names
-     * @return numOfLines - number of lines in all files
+     * @param fileNames   - array of files' names.
+     * @return numOfLines - number of lines in all files.
      */
     public static int getNumOfLines(String[] fileNames) {
         int numOfLines = 0;
-        for (int i = 0; i < fileNames.length; i++) {
+        for (String fileName : fileNames) {
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(fileNames[i]));
+                BufferedReader reader = new BufferedReader(new FileReader(fileName));
                 while (reader.readLine() != null) {
                     numOfLines++;
                 }
@@ -71,46 +63,55 @@ public class Ex2_1 {
     }
 
     /**
-     * This method creates a thread for each file to get his number of lines
+     * Creates a thread for each file that calculates his number of lines.
      * 
-     * @param fileNames - array of file names
-     * @return total number of lines in all the files
+     * @param fileNames   - array of files' names.
+     * @return numOfLines - total number of lines in all the files.
      */
     public static int getNumOfLinesThreads(String[] fileNames) {
-        int countLines = 0;
-        for (int i = 0; i < fileNames.length; i++) {
-            numOfLinesThreads nol = new numOfLinesThreads(fileNames[i]);
+        int numOfLines = 0;
+        for (String fileName : fileNames) {
+            numOfLinesThreads nol = new numOfLinesThreads(fileName);
             Thread myThread = new Thread(nol);
             myThread.start();
-            countLines += nol.getNumOfLines();
+            numOfLines += nol.getNumOfLines();
         }
-        return countLines;
+        return numOfLines;
     }
 
     /**
-     * computes number of lines in files using threadpool
+     * Computes the total number of lines in files using thread-pool.
      * 
-     * @param fileNames
-     * @return number ines
+     * @param fileNames   - array of file names
+     * @return numOfLines - total number of lines in all the files
      */
     public static int getNumOfLinesThreadPool(String[] fileNames) {
-        int countLines = 0;
-        try (ExecutorService threadPool1 = new ThreadPoolExecutor(3, 5,
-                0, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(fileNames.length))) {
-            for (int i = 0; i < fileNames.length; i++) {
-                Future<Integer> task = threadPool1.submit(new numOfLinesThreadPool(fileNames[i]));
+        int numOfLines = 0;
+        int MAX_THREADS = fileNames.length;
+        ExecutorService threadPool = Executors.newFixedThreadPool(MAX_THREADS); {
+            for (String fileName : fileNames) {
+                Future<Integer> result = threadPool.submit(new numOfLinesThreadPool(fileName));
                 try {
-                    countLines += task.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                    numOfLines += result.get();
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
             }
-            threadPool1.shutdown();
+            threadPool.shutdown();
         }
+        return numOfLines;
+    }
 
-        return countLines;
+    /**
+     * Deletes each file in "fileNames" array.
+     *
+     * @param fileNames - array of files' names.
+     */
+    public static void deleteFiles(String[] fileNames) {
+        for (String fileName : fileNames) {
+            File file = new File(fileName);
+            file.delete();
+        }
     }
 
     public static void main(String[] args) throws IOException {

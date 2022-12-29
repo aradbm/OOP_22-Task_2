@@ -3,14 +3,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class numOfLinesThreads implements Runnable {
-    private String fileName;
+public class numOfLinesThreads extends Thread {
+    private final String fileName;
     private int numOfLines;
 
     /**
-     * Constructor
-     * 
-     * @param fileName
+     * Constructor.
+     *
+     * @param fileName - the file's name.
      */
     public numOfLinesThreads(String fileName) {
         this.fileName = fileName;
@@ -18,40 +18,33 @@ public class numOfLinesThreads implements Runnable {
     }
 
     /**
-     * Returns the number of lines in the files in fileNames array
-     * 
-     * @param fileName - array of file names
-     * @return numOfLines - number of lines in all files
+     * Run method that will run upon start(). Calls numOfLinesThreads() method to calculate numOfLines.
      */
-    public int getNumOfLines() {
-        int numOfLines = 0;
-        String fileName = this.fileName;
+    @Override
+    public void run() {
+        calcNumOfLines();
+    }
+
+    /**
+     * Calculates number of lines of the file "fileName".
+     */
+    public void calcNumOfLines() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            BufferedReader reader = new BufferedReader(new FileReader(this.fileName));
             while (reader.readLine() != null) {
-                numOfLines++;
+                this.numOfLines++;
             }
             reader.close();
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
-        return numOfLines;
     }
 
     /**
-     * getter method for numOfLines
-     * 
-     * @return numOfLines
+     *
+     * @return numOfLines - number of lines for "fileName".
      */
-    public int getNum() {
+    public int getNumOfLines() {
         return numOfLines;
-    }
-
-    /**
-     * run method for runnable class
-     */
-    @Override
-    public void run() {
-        this.numOfLines = getNumOfLines();
     }
 }
