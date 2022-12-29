@@ -22,6 +22,11 @@ public enum TaskType {
 
     private int typePriority;
 
+    /**
+     * creates a Tasktype with given priority
+     * 
+     * @param priority of task
+     */
     private TaskType(int priority) {
         if (validatePriority(priority))
             typePriority = priority;
@@ -29,6 +34,11 @@ public enum TaskType {
             throw new IllegalArgumentException("Priority is not an integer");
     }
 
+    /**
+     * sets corent TaskType priority
+     * 
+     * @param priority
+     */
     public void setPriority(int priority) {
         if (validatePriority(priority))
             this.typePriority = priority;
@@ -36,16 +46,26 @@ public enum TaskType {
             throw new IllegalArgumentException("Priority is not an integer");
     }
 
+    /**
+     * returns corrent priority
+     * 
+     * @return
+     */
     public int getPriorityValue() {
         return typePriority;
     }
 
+    /**
+     * return corrent TaskType
+     * 
+     * @return
+     */
     public TaskType getType() {
         return this;
     }
 
     /**
-     * * priority is represented by an integer value, ranging from 1 to 10 * @param
+     * priority is represented by an integer value, ranging from 1 to 10 * @param
      * priority * @return whether the priority is valid or not
      */
     private static boolean validatePriority(int priority) {
