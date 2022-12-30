@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.Random;
 import java.util.concurrent.*;
 
@@ -68,12 +66,13 @@ public class Ex2_1 {
      * @param fileNames   - array of files' names.
      * @return numOfLines - total number of lines in all the files.
      */
-    public static int getNumOfLinesThreads(String[] fileNames) {
+    public static int getNumOfLinesThreads(String[] fileNames) throws InterruptedException {
         int numOfLines = 0;
         for (String fileName : fileNames) {
             numOfLinesThreads nol = new numOfLinesThreads(fileName);
             Thread myThread = new Thread(nol);
             myThread.start();
+            myThread.join();
             numOfLines += nol.getNumOfLines();
         }
         return numOfLines;
@@ -107,37 +106,13 @@ public class Ex2_1 {
      *
      * @param fileNames - array of files' names.
      */
-    public static void deleteFiles(String[] fileNames) {
+    public static boolean deleteFiles(String[] fileNames) {
         for (String fileName : fileNames) {
             File file = new File(fileName);
-            file.delete();
+            if(!file.delete()) {
+                return false;
+            }
         }
+        return true;
     }
-
-    public static void main(String[] args) throws IOException {
-        String[] fileNames = createTextFiles(5, 2, 100);
-        for (int i = 0; i < fileNames.length; i++) {
-            System.out.println("Created:  " + fileNames[i]);
-        }
-        // Calculating execution time for first option:
-        Instant start = Instant.now();
-        System.out.println("Number of lines: " + getNumOfLines(fileNames));
-        Instant end = Instant.now();
-        System.out.println(Duration.between(start, end));
-
-        // Calculating execution time for second option:
-        start = Instant.now();
-        System.out.println("Number of lines: " + getNumOfLinesThreads(fileNames));
-        end = Instant.now();
-        System.out.println(Duration.between(start, end));
-
-        // Calculating execution time for third option:
-        start = Instant.now();
-        System.out.println("Number of lines: " + getNumOfLinesThreadPool(fileNames));
-        end = Instant.now();
-        System.out.println(Duration.between(start, end));
-
-        deleteFiles(fileNames);
-    }
-
 }

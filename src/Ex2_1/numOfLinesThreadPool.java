@@ -16,6 +16,11 @@ public class numOfLinesThreadPool implements Callable<Integer> {
         this.fileName = fileName;
     }
 
+    /**
+     * Call method that will run upon submit(). Calculates and returns number of lines for Future object.
+     *
+     * @return numOfLines - number of lines for "fileName".
+     */
     @Override
     public Integer call() {
         int numOfLines = 0;
