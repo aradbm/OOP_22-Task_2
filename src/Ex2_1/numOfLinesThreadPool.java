@@ -24,9 +24,8 @@ public class numOfLinesThreadPool implements Callable<Integer> {
     @Override
     public Integer call() {
         int numOfLines = 0;
-        String fileName = this.fileName;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            BufferedReader reader = new BufferedReader(new FileReader(this.fileName));
             while (reader.readLine() != null) {
                 numOfLines++;
             }

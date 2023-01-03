@@ -18,7 +18,7 @@ public class numOfLinesThreads extends Thread {
     }
 
     /**
-     * Run method that will run upon start(). Calls numOfLinesThreads() method to calculate numOfLines.
+     * Run method that will run upon start(). Calls calcNumOfLines() method to calculate numOfLines.
      */
     @Override
     public void run() {

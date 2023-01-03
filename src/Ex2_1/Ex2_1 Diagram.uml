@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Ex2_1.Ex2_1</OriginalElement>
+  <nodes>
+    <node x="-177.42905965552083" y="148.96175933467765">Ex2_1.numOfLinesThreadPool</node>
+    <node x="264.0931412392352" y="354.51398321513375">java.lang.Runnable</node>
+    <node x="135.8010467463409" y="-70.72979466357387">Ex2_1.Ex2_1</node>
+    <node x="486.3262817575071" y="137.64632863768009">Ex2_1.numOfLinesThreads</node>
+    <node x="98.12158341322612" y="354.51398321513375">java.util.concurrent.Callable</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Ex2_1.Ex2_1" target="Ex2_1.numOfLinesThreadPool" relationship="CREATE">
+      <point x="-144.5" y="0.0" />
+      <point x="-57.42905965552083" y="11.27020533642613" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="Ex2_1.numOfLinesThreadPool" target="java.util.concurrent.Callable" relationship="REALIZATION">
+      <point x="-120.0" y="0.0" />
+      <point x="169.12158341322612" y="186.96175933467765" />
+      <point x="0.0" y="-26.5" />
+    </edge>
+    <edge source="Ex2_1.Ex2_1" target="Ex2_1.numOfLinesThreads" relationship="CREATE">
+      <point x="144.5" y="0.0" />
+      <point x="596.3262817575071" y="11.27020533642613" />
+      <point x="0.0" y="-72.0" />
+    </edge>
+    <edge source="Ex2_1.numOfLinesThreads" target="java.lang.Runnable" relationship="REALIZATION">
+      <point x="0.0" y="72.0" />
+      <point x="596.3262817575071" y="186.96175933467765" />
+      <point x="324.5931412392352" y="186.96175933467765" />
+      <point x="0.0" y="-26.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.114937029572912" showDependencies="true" x="297.22962649683666" y="173.2905354775216" />
+  <SelectedNodes>
+    <node>Ex2_1.Ex2_1</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

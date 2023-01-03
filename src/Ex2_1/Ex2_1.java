@@ -68,12 +68,16 @@ public class Ex2_1 {
      */
     public static int getNumOfLinesThreads(String[] fileNames) throws InterruptedException {
         int numOfLines = 0;
-        for (String fileName : fileNames) {
-            numOfLinesThreads nol = new numOfLinesThreads(fileName);
-            Thread myThread = new Thread(nol);
-            myThread.start();
-            myThread.join();
-            numOfLines += nol.getNumOfLines();
+        numOfLinesThreads[] threads = new numOfLinesThreads[fileNames.length];
+        for (int i = 0; i < fileNames.length; i++) {
+            threads[i] = new numOfLinesThreads(fileNames[i]);
+            threads[i].start();
+        }
+        for (numOfLinesThreads thread : threads) {
+            thread.join();
+        }
+        for (numOfLinesThreads thread : threads) {
+            numOfLines += thread.getNumOfLines();
         }
         return numOfLines;
     }
@@ -87,17 +91,19 @@ public class Ex2_1 {
     public static int getNumOfLinesThreadPool(String[] fileNames) {
         int numOfLines = 0;
         int MAX_THREADS = fileNames.length;
-        ExecutorService threadPool = Executors.newFixedThreadPool(MAX_THREADS); {
-            for (String fileName : fileNames) {
-                Future<Integer> result = threadPool.submit(new numOfLinesThreadPool(fileName));
-                try {
-                    numOfLines += result.get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
-            threadPool.shutdown();
+        Future<?>[] results = new Future<?>[MAX_THREADS];
+        ExecutorService threadPool = Executors.newFixedThreadPool(MAX_THREADS/10);
+        for (int i = 0; i < MAX_THREADS; i++) {
+            results[i] = threadPool.submit(new numOfLinesThreadPool(fileNames[i]));
         }
+        for (int i = 0; i < MAX_THREADS; i++) {
+            try {
+                numOfLines += (int) results[i].get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        threadPool.shutdown();
         return numOfLines;
     }
 
@@ -106,13 +112,12 @@ public class Ex2_1 {
      *
      * @param fileNames - array of files' names.
      */
-    public static boolean deleteFiles(String[] fileNames) {
+    public static void deleteFiles(String[] fileNames) {
         for (String fileName : fileNames) {
             File file = new File(fileName);
             if(!file.delete()) {
-                return false;
+                System.out.println("Deleting  " + fileName +" failed!");
             }
         }
-        return true;
     }
 }

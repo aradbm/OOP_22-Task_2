@@ -5,10 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.Instant;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class Ex2_1Test {
+class Part1Test {
 
     @Test
     void createTextFiles() {
@@ -21,7 +20,7 @@ class Ex2_1Test {
 
     @Test
     void getNumOfLines() {
-        String[] fileNames = Ex2_1.createTextFiles(4,5,20);
+        String[] fileNames = Ex2_1.createTextFiles(3000,5,5000);
         Instant start = Instant.now(); // Start timer.
         System.out.println("------------------- Number of lines: " + Ex2_1.getNumOfLines(fileNames) + " -------------------");
         Instant end = Instant.now(); // End times.
@@ -31,7 +30,7 @@ class Ex2_1Test {
 
     @Test
     void getNumOfLinesThreads() throws InterruptedException {
-        String[] fileNames = Ex2_1.createTextFiles(4,5,20);
+        String[] fileNames = Ex2_1.createTextFiles(3000,5,5000);
         Instant start = Instant.now();
         System.out.println("------------------- Number of lines: " + Ex2_1.getNumOfLinesThreads(fileNames) + " -------------------");
         Instant end = Instant.now();
@@ -41,7 +40,7 @@ class Ex2_1Test {
 
     @Test
     void getNumOfLinesThreadPool() {
-        String[] fileNames = Ex2_1.createTextFiles(4,5,20);
+        String[] fileNames = Ex2_1.createTextFiles(3000,5,5000);
         Instant start = Instant.now();
         System.out.println("------------------- Number of lines: " + Ex2_1.getNumOfLinesThreadPool(fileNames) + " -------------------");
         Instant end = Instant.now();
