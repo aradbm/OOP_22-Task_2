@@ -2,23 +2,17 @@ package Ex2_2;
 
 import java.util.concurrent.Callable;
 
-public class Task<T> implements Callable {
-    private TaskType tType;
-    private Callable<T> methodToExecute;
-    private T ans;
+public class Task<T> implements Callable<T> {
+    private final TaskType tType;
+    private final Callable<T> methodToExecute;
 
     public Task(Callable<T> methodToExecute, TaskType tType) {
-        this.tType = tType;
         this.methodToExecute = methodToExecute;
-    }
-
-    public int createTask(Runnable ts, TaskType tt) {
-        
-        return -1;
+        this.tType = tType;
     }
 
     /**
-     * @return this task priority number
+     * @return The task priority number.
      */
     public int getPriority() {
         return this.tType.getPriorityValue();
@@ -26,8 +20,7 @@ public class Task<T> implements Callable {
 
     @Override
     public T call() throws Exception {
-
-        return null;
+        return this.methodToExecute.call();
     }
 
 }

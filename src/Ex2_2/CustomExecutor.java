@@ -1,5 +1,6 @@
 package Ex2_2;
 
+import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -12,41 +13,29 @@ public class CustomExecutor implements Callable {
      * don't really want more than the number of processors in the system its run
      * on. Use Runtime.getRuntime().availableProcessors() to find out.
      */
-    private int MAX_THREADS = Runtime.getRuntime().availableProcessors() - 1;
-    private int CurrentMax;
-    private BlockingQueue runQueue = new LinkedBlockingQueue<Task>();
+    private final int MAX_THREADS = Runtime.getRuntime().availableProcessors() - 1;
+    private final int MIN_THREADS = Runtime.getRuntime().availableProcessors() / 2;
+    private int maxPriority;
+    ArrayList<Thread> myThreads;
+    private final BlockingQueue <Task> runQueue = new LinkedBlockingQueue<>();
 
-    /**
-     * Empty constructor
-     */
     public CustomExecutor() {
-
+        myThreads = new ArrayList<>();
+        maxPriority = 0;
     }
 
-    public CustomExecutor(int maxOfThreads) {
-        this.CurrentMax = -1;
-    }
-
-    public void submit(Task taskToAdd, TaskType taskType) {
-        // Runnable runnableTask = (Runnable) (taskToAdd);
-        // runQueue.add(runnableTask);
-        switch (taskType.getType()) {
-            case COMPUTATIONAL:
-                System.out.println();
-                break;
-            case IO:
-                System.out.println();
-                break;
-            case OTHER:
-                System.out.println();
-                break;
-            default: // throw exeption
-                break;
+    public void submit (Task taskToSubmit) {
+        if (taskToSubmit.getPriority() > maxPriority) {
+            maxPriority = taskToSubmit.getPriority();
         }
+        addToQueue(taskToSubmit);
+    }
+    public int getMaxPriority() {
+        return this.maxPriority;
     }
 
-    public int getCurrentMax() {
-        return this.CurrentMax;
+    public void addToQueue (Task taskToSubmit) {
+        runQueue.add(taskToSubmit);
     }
 
     private Runnable take() throws InterruptedException {
