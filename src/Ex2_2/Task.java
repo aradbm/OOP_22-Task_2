@@ -2,8 +2,7 @@ package Ex2_2;
 
 import java.util.concurrent.Callable;
 
-@FunctionalInterface
-public class Task implements Callable<Object>, taskInterface {
+public class Task implements taskInterface {
     private final TaskType tType;
     private final Callable<Object> methodToExecute;
 
@@ -20,8 +19,8 @@ public class Task implements Callable<Object>, taskInterface {
     }
 
     @Override
-    public Object call() throws Exception {
-        return this.methodToExecute.call();
+    public void call() {
+        return;
     }
 
 }

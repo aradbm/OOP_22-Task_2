@@ -48,7 +48,7 @@ public class CustomExecutor implements ExecutorService {
         return this.maxPriority;
     }
 
-    public <T> void addToQueue(Task<T> taskToSubmit) {
+    public <T> void addToQueue(Task taskToSubmit) {
         workingBlockingQueue.add((Runnable) taskToSubmit);
     }
 

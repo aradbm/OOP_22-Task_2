@@ -1,70 +1,13 @@
 package test;
 
 import Ex2_1.Ex2_1;
-import Ex2_2.CustomExecutor;
-import Ex2_2.Task;
-import Ex2_2.TaskType;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 class Part1Test {
-    @Test
-    double asd() {
-        CustomExecutor sd = new CustomExecutor();
-
-        Task task = Task(() -> {
-            int sum = 0;
-            for (int i = 1; i <= 10; i++) {
-                sum += i;
-            }
-            return sum;
-        }, TaskType.COMPUTATIONAL);
-
-        var sumTask = sd.submit(task);
-
-        TaskType a = TaskType.COMPUTATIONAL;
-        Callable<Double> callable1 = () -> {
-            return 1000 * Math.pow(1.02, 5);
-        };
-        Task<Object> task2 = new Task<Object>(callable1, a);
-
-        Callable<String> callable2 = () -> {
-            StringBuilder sb = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-            return sb.reverse().toString();
-        };
-
-        // Future<Double> priceTask = sd.submit(() -> {
-        // return 1000 * Math.pow(1.02, 5);
-        // }, TaskType.COMPUTATIONAL);
-
-        var sasd = sd.submit(callable1, a);
-        Future<String> reverseTask = sd.submit(callable2, TaskType.IO);
-
-        Double totalPrice;
-        String reversed;
-        // totalPrice = priceTask.get();
-        reversed = reverseTask.get();
-
-    }
-
-    private Object Task(Object object, TaskType computational) {
-        return null;
-    }
-
-    private Object Task(Object object, TaskType computational) {
-        return null;
-    }
-
-    private Object Task(Object object, TaskType computational) {
-        return null;
-    }
 
     @Test
     void createTextFiles() {
@@ -78,7 +21,7 @@ class Part1Test {
 
     @Test
     void getNumOfLines() {
-        String[] fileNames = Ex2_1.createTextFiles(3000, 5, 5000);
+        String[] fileNames = Ex2_1.createTextFiles(3000, 5, 10000);
         Instant start = Instant.now(); // Start timer.
         System.out.println(
                 "------------------- Number of lines: " + Ex2_1.getNumOfLines(fileNames) + " -------------------");
@@ -90,7 +33,7 @@ class Part1Test {
 
     @Test
     void getNumOfLinesThreads() throws InterruptedException {
-        String[] fileNames = Ex2_1.createTextFiles(3000, 5, 5000);
+        String[] fileNames = Ex2_1.createTextFiles(3000, 5, 10000);
         Instant start = Instant.now();
         System.out.println("------------------- Number of lines: " + Ex2_1.getNumOfLinesThreads(fileNames)
                 + " -------------------");
@@ -102,7 +45,7 @@ class Part1Test {
 
     @Test
     void getNumOfLinesThreadPool() {
-        String[] fileNames = Ex2_1.createTextFiles(3000, 5, 5000);
+        String[] fileNames = Ex2_1.createTextFiles(3000, 5, 10000);
         Instant start = Instant.now();
         System.out.println("------------------- Number of lines: " + Ex2_1.getNumOfLinesThreadPool(fileNames)
                 + " -------------------");

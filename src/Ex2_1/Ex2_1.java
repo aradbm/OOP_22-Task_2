@@ -85,14 +85,14 @@ public class Ex2_1 {
     /**
      * Computes the total number of lines in files using thread-pool.
      * 
-     * @param fileNames   - array of file names
+     * @param fileNames   - array of files' names
      * @return numOfLines - total number of lines in all the files
      */
     public static int getNumOfLinesThreadPool(String[] fileNames) {
         int numOfLines = 0;
         int MAX_THREADS = fileNames.length;
         Future<?>[] results = new Future<?>[MAX_THREADS];
-        ExecutorService threadPool = Executors.newFixedThreadPool(MAX_THREADS/10);
+        ExecutorService threadPool = Executors.newFixedThreadPool(MAX_THREADS);
         for (int i = 0; i < MAX_THREADS; i++) {
             results[i] = threadPool.submit(new numOfLinesThreadPool(fileNames[i]));
         }
