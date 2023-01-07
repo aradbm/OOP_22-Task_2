@@ -1,13 +1,18 @@
 package Ex2_2;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.*;
+
+import static java.util.Collections.reverseOrder;
 
 public class CustomExecutor extends ThreadPoolExecutor {
     private static final int MAX_THREADS = Runtime.getRuntime().availableProcessors() - 1;
     private static final int MIN_THREADS = Runtime.getRuntime().availableProcessors() / 2;
     private int maxPriority;
     // ArrayList<Thread> myThreads;
-    private static final BlockingQueue<Runnable> workingBlockingQueue = new PriorityBlockingQueue<>();
+    public static BlockingQueue<Runnable> workingBlockingQueue = new PriorityBlockingQueue<Runnable>(MIN_THREADS,Collections.reverseOrder());
+    // Collections.reverseOrder() or CustomQueue()
 
     /* ********************************* Constructor ********************************* */
     /**
@@ -49,6 +54,9 @@ public class CustomExecutor extends ThreadPoolExecutor {
     }
 
     private void addToQueue(Callable<?> taskToSubmit) {
-        workingBlockingQueue.add((Runnable) taskToSubmit);
+        super.submit(taskToSubmit);
+    }
+    public void gracefullyTerminate(){
+        super.shutdown();
     }
 }
