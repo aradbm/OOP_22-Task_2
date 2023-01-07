@@ -2,9 +2,9 @@ package Ex2_2;
 
 import java.util.concurrent.Callable;
 
-public class Task<T> implements Callable<T>, Comparable<Task<T>> {
+public class Task implements Callable<Object>, Comparable<Task> {
     private final TaskType tType;
-    private final Callable<T> methodToExecute;
+    private final Callable<?> methodToExecute;
 
     /********************************* Constructor ********************************* /
      /**
@@ -12,7 +12,7 @@ public class Task<T> implements Callable<T>, Comparable<Task<T>> {
      * @param methodToExecute - the method we want the task to execute.
      * @param tType - the task's type.
      */
-    private Task(Callable<T> methodToExecute, TaskType tType) {
+    private Task(Callable<?> methodToExecute, TaskType tType) {
         this.tType = tType;
         this.methodToExecute = methodToExecute;
     }
@@ -24,8 +24,8 @@ public class Task<T> implements Callable<T>, Comparable<Task<T>> {
      * @param tType - the task's type.
      * @return a new Task.
      */
-    public Task<T> createTask(Callable<T> methodToExecute, TaskType tType) {
-        return new Task<>(methodToExecute, tType);
+    public static Task createTask(Callable<?> methodToExecute, TaskType tType) {
+        return new Task(methodToExecute, tType);
     }
 
     /**
@@ -33,8 +33,8 @@ public class Task<T> implements Callable<T>, Comparable<Task<T>> {
      * @param methodToExecute - the method we want the task to execute.
      * @return a new Task.
      */
-    public Task<T> createTask(Callable<T> methodToExecute) {
-        return new Task<>(methodToExecute, TaskType.OTHER);
+    public Task createTask(Callable<?> methodToExecute) {
+        return new Task(methodToExecute, TaskType.OTHER);
     }
 
     /********************************* Return Tasks' Priority Method ********************************* /
@@ -52,7 +52,7 @@ public class Task<T> implements Callable<T>, Comparable<Task<T>> {
      * @throws Exception - If the execution is failed.
      */
     @Override
-    public T call() throws Exception {
+    public Object call() throws Exception {
             return this.methodToExecute.call();
     }
 
@@ -65,7 +65,7 @@ public class Task<T> implements Callable<T>, Comparable<Task<T>> {
      * if value < 0, "other" task is preferred, and if value = 0, it doesn't matter.
      */
     @Override
-    public int compareTo(Task<T> other) {
+    public int compareTo(Task other) {
         return - (this.getPriority() - other.getPriority());
     }
 }
