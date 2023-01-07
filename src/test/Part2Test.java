@@ -96,6 +96,8 @@ public static final Logger logger = LoggerFactory.getLogger(Part2Test.class);
         Callable<Double> callable1 = ()-> {
             return 1000 * Math.pow(1.02, 5);
         };
+        logger.info(()-> "Current maximum priority = " +
+                customExecutor.getCurrentMax());
         Callable<String> callable2 = ()-> {
             StringBuilder sb = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
             return sb.reverse().toString();

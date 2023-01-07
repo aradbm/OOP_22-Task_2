@@ -5,7 +5,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class CustomQueue<Task> extends PriorityBlockingQueue<Task> {
-    private int maxPriority;
+    private int maxPriority=99;
 
     public CustomQueue(int initialCapacity, Comparator<? super Task> comparator, int maxPriority) {
         super(initialCapacity, comparator);
@@ -24,6 +24,7 @@ public class CustomQueue<Task> extends PriorityBlockingQueue<Task> {
         Object taskObject = super.peek();
         int priority =checkPriority(taskObject);
         this.maxPriority = maxPriority; // =============== problem here, never gets here
+        this.maxPriority=99;
     }
     private int checkPriority(Object taskObject)
     {

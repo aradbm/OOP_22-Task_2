@@ -10,7 +10,8 @@ public class CustomExecutor extends ThreadPoolExecutor {
     private static final int MAX_THREADS = Runtime.getRuntime().availableProcessors() - 1;
     private static final int MIN_THREADS = Runtime.getRuntime().availableProcessors() / 2;
     private int maxPriority;
-    public static CustomQueue<Runnable> workingBlockingQueue= new CustomQueue<>(MIN_THREADS,Collections.reverseOrder(),10); // 10 is lowest
+//    public static CustomQueue<Runnable> workingBlockingQueue= new CustomQueue<>(MIN_THREADS,Collections.reverseOrder(),10); // 10 is lowest
+    public static BlockingQueue<Runnable> workingBlockingQueue  = new PriorityBlockingQueue<>(MIN_THREADS,Collections.reverseOrder());
 
     /* ********************************* Constructor ********************************* */
     /**
@@ -29,7 +30,6 @@ public class CustomExecutor extends ThreadPoolExecutor {
 //         if (taskToSubmit.getPriority() < maxPriority) {
 //             maxPriority = taskToSubmit.getPriority();
 //         }
-         workingBlockingQueue.updatePriority(taskToSubmit.getPriority());
          RunnableFuture<?> futureObj = newTaskFor(taskToSubmit);
          addToQueue(taskToSubmit);
          execute(futureObj);
@@ -49,7 +49,10 @@ public class CustomExecutor extends ThreadPoolExecutor {
      * @return the max priority (which is the lowest value of the tasks' priority in the pool).
      */
     public int getCurrentMax() {
-        this.maxPriority = workingBlockingQueue.getMaxPriority();
+        if (workingBlockingQueue.peek()==null)
+            return 10;
+        Task tt =(Task) workingBlockingQueue.peek();
+        this.maxPriority =tt.getPriority();
         return this.maxPriority;
     }
 
