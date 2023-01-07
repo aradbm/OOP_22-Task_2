@@ -7,18 +7,18 @@ import java.util.concurrent.Callable;
 public class numOfLinesThreadPool implements Callable<Integer> {
     private final String fileName;
 
-    /**
-     * Constructor
-     * 
+    /********************************* Constructor ********************************* /
+     /**
+     * Constructor.
      * @param fileName- the file's name.
      */
     public numOfLinesThreadPool(String fileName) {
         this.fileName = fileName;
     }
 
-    /**
+    /********************************* Call Method ********************************* /
+     /**
      * Call method that will run upon submit(). Calculates and returns number of lines for Future object.
-     *
      * @return numOfLines - number of lines for "fileName".
      */
     @Override

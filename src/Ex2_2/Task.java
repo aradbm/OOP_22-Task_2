@@ -2,30 +2,70 @@ package Ex2_2;
 
 import java.util.concurrent.Callable;
 
-public class Task<T> implements Callable<T> {
-    private TaskType tType;
-    private Callable<?> methodToExecute;
+public class Task<T> implements Callable<T>, Comparable<Task<T>> {
+    private final TaskType tType;
+    private final Callable<T> methodToExecute;
 
-    void createTask(T aT, TaskType aTaskType) {
-        this.methodToExecute = (Callable<?>) (aT);
-        this.tType = aTaskType;
+    /********************************* Constructor ********************************* /
+     /**
+     * Constructor.
+     * @param methodToExecute - the method we want the task to execute.
+     * @param tType - the task's type.
+     */
+    private Task(Callable<T> methodToExecute, TaskType tType) {
+        this.tType = tType;
+        this.methodToExecute = methodToExecute;
     }
 
-    // public Task<T> createTask(taskInterface<T> methodToExecute, TaskType tType) {
-    // this.methodToExecute = methodToExecute;
-    // this.tType = tType;
-    // return this;
+    /********************************* Factory Methods ********************************* /
+    /**
+     * Factory method that creates a new Task.
+     * @param methodToExecute - the method we want the task to execute.
+     * @param tType - the task's type.
+     * @return a new Task.
+     */
+    public Task<T> createTask(Callable<T> methodToExecute, TaskType tType) {
+        return new Task<>(methodToExecute, tType);
+    }
 
     /**
-     * @return The task priority number.
+     * Factory method that creates a new Task.
+     * @param methodToExecute - the method we want the task to execute.
+     * @return a new Task.
+     */
+    public Task<T> createTask(Callable<T> methodToExecute) {
+        return new Task<>(methodToExecute, TaskType.OTHER);
+    }
+
+    /********************************* Return Tasks' Priority Method ********************************* /
+     /**
+     * @return the task's priority number.
      */
     public int getPriority() {
         return this.tType.getPriorityValue();
     }
 
+    /********************************* Task Execution  ********************************* /
+     /**
+     * The tasks' method we want to execute. Will throw an exception if failed.
+     * @return whatever "methodToExecute" returns.
+     * @throws Exception - If the execution is failed.
+     */
     @Override
     public T call() throws Exception {
-        return (T) this.methodToExecute.call();
+            return this.methodToExecute.call();
     }
 
+    /********************************* Comparing Method  ********************************* /
+     /**
+     * Compares between 2 tasks.
+     * @param other - the object to be compared.
+     * @return minus the difference between this tasks' priority and "other" task priority.
+     * low priority value is preferred. Thus, If the value returned > 0, this task is preferred,
+     * if value < 0, "other" task is preferred, and if value = 0, it doesn't matter.
+     */
+    @Override
+    public int compareTo(Task<T> other) {
+        return - (this.getPriority() - other.getPriority());
+    }
 }

@@ -8,7 +8,7 @@ import java.time.Instant;
 import org.junit.jupiter.api.Test;
 
 class Part1Test {
-    @Test
+    /*@Test
     void asd() {
         CustomExecutor sd = new CustomExecutor();
 
@@ -20,7 +20,7 @@ class Part1Test {
             return sum;
         }, TaskType.COMPUTATIONAL);
 
-        var sumTask = sd.submit(task);
+        var sumTask = sd.submit(task);*/
 
         // TaskType a = TaskType.COMPUTATIONAL;
         // Callable<Double> callable1 = () -> {
@@ -40,12 +40,10 @@ class Part1Test {
         // var sasd = sd.submit(callable1, a);
         // Future<String> reverseTask = sd.submit(callable2, TaskType.IO);
 
-        Double totalPrice;
-        String reversed;
+        //Double totalPrice;
+        //String reversed;
         // totalPrice = priceTask.get();
         // reversed = reverseTask.get();
-
-    }
 
     @Test
     void createTextFiles() {
@@ -72,8 +70,9 @@ class Part1Test {
     @Test
     void getNumOfLinesThreads() throws InterruptedException {
         String[] fileNames = Ex2_1.createTextFiles(3000, 5, 10000);
+        Ex2_1 obj = new Ex2_1();
         Instant start = Instant.now();
-        System.out.println("------------------- Number of lines: " + Ex2_1.getNumOfLinesThreads(fileNames)
+        System.out.println("------------------- Number of lines: " + obj.getNumOfLinesThreads(fileNames)
                 + " -------------------");
         Instant end = Instant.now();
         System.out.println("(Time): With Threads: " + Duration.between(start, end) + "\n"); // Calculating execution
@@ -84,8 +83,9 @@ class Part1Test {
     @Test
     void getNumOfLinesThreadPool() {
         String[] fileNames = Ex2_1.createTextFiles(3000, 5, 10000);
+        Ex2_1 obj = new Ex2_1();
         Instant start = Instant.now();
-        System.out.println("------------------- Number of lines: " + Ex2_1.getNumOfLinesThreadPool(fileNames)
+        System.out.println("------------------- Number of lines: " + obj.getNumOfLinesThreadPool(fileNames)
                 + " -------------------");
         Instant end = Instant.now();
         System.out.println("(Time): With ThreadPool: " + Duration.between(start, end) + "\n"); // Calculating execution

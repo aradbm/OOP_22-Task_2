@@ -9,10 +9,10 @@ import java.util.Random;
 import java.util.concurrent.*;
 
 public class Ex2_1 {
-    /**
+    /********************************* Create Files Method ********************************* /
+     /**
      * Creates n text files with random numbers of rows in each file,
      * and returns the files' names in a String array.
-     * 
      * @param n     - number of files to create.
      * @param seed  - seed for random number generator.
      * @param bound - upper bound for random number generator.
@@ -38,9 +38,9 @@ public class Ex2_1 {
         return fileNames;
     }
 
-    /**
+    /********************************* NumOfLines Method ********************************* /
+     /**
      * Returns the number of lines in the files in "fileNames" array.
-     * 
      * @param fileNames   - array of files' names.
      * @return numOfLines - number of lines in all files.
      */
@@ -60,13 +60,13 @@ public class Ex2_1 {
         return numOfLines;
     }
 
-    /**
+    /********************************* NumOfLines Method With Threads ********************************* /
+     /**
      * Creates a thread for each file that calculates his number of lines.
-     * 
      * @param fileNames   - array of files' names.
      * @return numOfLines - total number of lines in all the files.
      */
-    public static int getNumOfLinesThreads(String[] fileNames) throws InterruptedException {
+    public int getNumOfLinesThreads(String[] fileNames) throws InterruptedException {
         int numOfLines = 0;
         numOfLinesThreads[] threads = new numOfLinesThreads[fileNames.length];
         for (int i = 0; i < fileNames.length; i++) {
@@ -82,13 +82,13 @@ public class Ex2_1 {
         return numOfLines;
     }
 
-    /**
+    /********************************* NumOfLines Method With ThreadPool ********************************* /
+     /**
      * Computes the total number of lines in files using thread-pool.
-     * 
      * @param fileNames   - array of files' names
      * @return numOfLines - total number of lines in all the files
      */
-    public static int getNumOfLinesThreadPool(String[] fileNames) {
+    public int getNumOfLinesThreadPool(String[] fileNames) {
         int numOfLines = 0;
         int MAX_THREADS = fileNames.length;
         Future<?>[] results = new Future<?>[MAX_THREADS];
@@ -107,9 +107,9 @@ public class Ex2_1 {
         return numOfLines;
     }
 
-    /**
+    /********************************* Delete Files Method ********************************* /
+     /**
      * Deletes each file in "fileNames" array.
-     *
      * @param fileNames - array of files' names.
      */
     public static void deleteFiles(String[] fileNames) {

@@ -7,9 +7,9 @@ public class numOfLinesThreads extends Thread {
     private final String fileName;
     private int numOfLines;
 
-    /**
+    /********************************* Constructor ********************************* /
+     /**
      * Constructor.
-     *
      * @param fileName - the file's name.
      */
     public numOfLinesThreads(String fileName) {
@@ -17,7 +17,8 @@ public class numOfLinesThreads extends Thread {
         this.numOfLines = 0;
     }
 
-    /**
+    /********************************* Run Method ********************************* /
+     /**
      * Run method that will run upon start(). Calls calcNumOfLines() method to calculate numOfLines.
      */
     @Override
@@ -25,7 +26,8 @@ public class numOfLinesThreads extends Thread {
         calcNumOfLines();
     }
 
-    /**
+    /********************************* Calculate numOfLines Method  ********************************* /
+     /**
      * Calculates number of lines of the file "fileName".
      */
     public void calcNumOfLines() {
@@ -40,7 +42,8 @@ public class numOfLinesThreads extends Thread {
         }
     }
 
-    /**
+    /********************************* Return "numOfLines" Method ********************************* /
+     /**
      *
      * @return numOfLines - number of lines for "fileName".
      */

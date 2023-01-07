@@ -23,9 +23,8 @@ public enum TaskType {
     private int typePriority;
 
     /**
-     * Creates a Tasktype with given priority
-     * 
-     * @param priority of task
+     * Creates a TaskType with a given priority.
+     * @param priority - the priority of the task
      */
     private TaskType(int priority) {
         if (validatePriority(priority))
@@ -36,8 +35,7 @@ public enum TaskType {
 
     /**
      * Sets current TaskType priority.
-     * 
-     * @param priority
+     * @param priority - the priority to set for this TaskType.
      */
     public void setPriority(int priority) {
         if (validatePriority(priority))
@@ -48,7 +46,6 @@ public enum TaskType {
 
     /**
      * Returns current priority.
-     * 
      * @return typePriority
      */
     public int getPriorityValue() {
@@ -57,7 +54,6 @@ public enum TaskType {
 
     /**
      * Returns current TaskType.
-     * 
      * @return this TaskType.
      */
     public TaskType getType() {
@@ -66,8 +62,7 @@ public enum TaskType {
 
     /**
      * Priority is represented by an integer value, ranging from 1 to 10.
-     *
-     * @param priority - The priority of this TaskType.
+     * @param priority - the priority of this TaskType.
      * @return True/False - whether the priority is valid or not.
      */
     private static boolean validatePriority(int priority) {
