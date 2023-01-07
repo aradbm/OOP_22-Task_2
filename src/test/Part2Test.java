@@ -51,4 +51,21 @@ class Part2Test {
     @Test
     void compareTo() {
     }
+
+    /* ********************************* CustomExecutor Tests ********************************* */
+    @Test
+    void Test() {
+        CustomExecutor customExecutor = new CustomExecutor();
+        Task task1 = Task.createTask(() -> {
+            int sum = 0;
+            for (int i = 1; i <= 10; i++) {
+                sum += i;
+            }
+            return sum;
+        }, TaskType.COMPUTATIONAL);
+        customExecutor.submit(task1);
+        System.out.println(customExecutor.shutdownNow());
+        System.out.println(customExecutor.isShutdown());
+
+    }
 }

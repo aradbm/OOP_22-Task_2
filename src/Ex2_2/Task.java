@@ -6,7 +6,7 @@ public class Task implements Callable<Object>, Comparable<Task> {
     private final TaskType tType;
     private final Callable<?> methodToExecute;
 
-    /********************************* Constructor ********************************* /
+    /* ********************************* Constructor ********************************* */
      /**
      * Constructor.
      * @param methodToExecute - the method we want the task to execute.
@@ -33,7 +33,7 @@ public class Task implements Callable<Object>, Comparable<Task> {
      * @param methodToExecute - the method we want the task to execute.
      * @return a new Task.
      */
-    public Task createTask(Callable<?> methodToExecute) {
+    public static Task createTask(Callable<?> methodToExecute) {
         return new Task(methodToExecute, TaskType.OTHER);
     }
 
