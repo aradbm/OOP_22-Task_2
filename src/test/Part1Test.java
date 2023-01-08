@@ -24,8 +24,8 @@ class Part1Test {
         System.out.println(
                 "------------------- Number of lines: " + Ex2_1.getNumOfLines(fileNames) + " -------------------");
         Instant end = Instant.now(); // End times.
-        System.out.println("(Time): Without Threads: " + Duration.between(start, end) + "\n"); // Calculating execution
-                                                                                               // time for first option.
+        // Calculating execution time for first option.
+        System.out.println("(Time): Without Threads: " + Duration.between(start, end) + "\n");
         Ex2_1.deleteFiles(fileNames); // Delete files.
     }
 
@@ -37,8 +37,8 @@ class Part1Test {
         System.out.println("------------------- Number of lines: " + obj.getNumOfLinesThreads(fileNames)
                 + " -------------------");
         Instant end = Instant.now();
-        System.out.println("(Time): With Threads: " + Duration.between(start, end) + "\n"); // Calculating execution
-                                                                                            // time for second option.
+        // Calculating execution time for second option.
+        System.out.println("(Time): With Threads: " + Duration.between(start, end) + "\n");
         Ex2_1.deleteFiles(fileNames); // Delete files.
     }
 
@@ -50,8 +50,8 @@ class Part1Test {
         System.out.println("------------------- Number of lines: " + obj.getNumOfLinesThreadPool(fileNames)
                 + " -------------------");
         Instant end = Instant.now();
-        System.out.println("(Time): With ThreadPool: " + Duration.between(start, end) + "\n"); // Calculating execution
-                                                                                               // time for third option.
+        // Calculating execution time for third option.
+        System.out.println("(Time): With ThreadPool: " + Duration.between(start, end) + "\n");
         Ex2_1.deleteFiles(fileNames); // Delete files.
     }
 }
