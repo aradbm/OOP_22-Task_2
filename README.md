@@ -28,7 +28,14 @@ Creating/Reading/Deleting files and Priority Based Task Scandalising.
    Tests for part 1.
 
 * Ex2_2
-
+  * > ___CustomExecutor.java___ -  
+    Class that extends threadpoolexecutor, keeps a Executor and a priorityqueue that holds Tasks and callable functions.
+  * >___Task.java___ -  
+    Class that implements Callable and comparing, holds a Collable of some kind and a TaskType.
+  * >___TaskType.uml___ -  
+    Enum class. Used to define a task priority.
+  * >___Part12est.java___ -  
+    Tests for part 2.
 ***
 
 ## About Threading in JAVA
@@ -150,6 +157,71 @@ This method calculates the total number of rows in "fileName" and returns the re
 ## [Ex2_1 Diagram](https://github.com/aradbm/OOP_Ex2/blob/master/src/Ex2_1/Ex2_1%20Diagram.uml)
 ![App Screenshot](https://i.ibb.co/dckFTbz/Ex2-1-Diagram.png)
 
+***
+# Ex2 - Part 2
+## [Ex2_2](https://github.com/aradbm/OOP_Ex2/tree/master/src/Ex2_2)
+
+In part 2 we are creating asynchronous thread pool with a priority blocking queue and a Executor service that uses the queue.
+We use a custom Task with a priority based on enum TaskType.  
+1 is the highest priority for computational methods, 2 is for In-Out methods, and 3 for other methods.  
+Thus we create an asynchronous executor that executes methods according t their priority.
+
+
+## [CustomExecutor.java](https://github.com/aradbm/OOP_Ex2/blob/master/src/Ex2_2/CustomExecutor.java)
+
+This class extends ThreadPoolExecutor, and adds method to submit Task type to the Runnable queue,
+while also returns the maximum priority in queue in O(1) complexity.  
+Thus, each instance has few fields:
+1. `static final int MAX_THREADS` - the maximus threads we allow.
+2. `static final int MIN_THREADS` - the minimum threads we allow.
+3. `static int[] maxPriority` - an array to keep track of the currently queued tasks and the maximum priority.
+4. `static BlockingQueue<Runnable> workingBlockingQueue` - a queue for tasks waiting to be executed.
+The queue keeps a priority based on the "compareTo" method in Task class.
+
+#### `CustomExecutor()`:
+Constructor.
+#### `<T> Future<T> submit(Task taskToSubmit)`:
+Submit method to add a Task to the queue, returns a future type to save the return value.
+#### `<T> Future<T> submit(Callable<T> TaskMethod, TaskType tType)`:
+Submit method to add a Callable of any kind with a given TaskType to the queue.
+#### `<T> Future<T> submit(Callable<T> TaskMethod)`:
+Submit method to add a Callable method, without a TaskType to the queue.
+#### `getCurrentMax()`:
+This method returns the current maximum priority in queue with O(1) complexity & O(1) space complexity.
+#### `gracefullyTerminate()`:
+Shutting down the executor after it makes sure every thread ended while stops adding  
+more tasks to the blocking priority queue of a task in the queue.
+
+## [Task.java](https://github.com/aradbm/OOP_Ex2/blob/master/src/Ex2_2/Task.java)
+
+This class implements Callable, and comparable interfaces and extends FutureTask<T>.  
+A Task object is a Callable method with a TaskType to know the callable priority,   
+where 1 is the highest and 10 is the lowest in priority.  
+Thus, each instance has few fields:
+1. `final TaskType taskType` - a taskType for this task.
+2. `final Callable<?> methodToExecute;` - the method associated with this task.
+
+#### `Task(Callable<?> methodToExecute, TaskType tType)`:
+Private constructor.
+#### `public static <T> Task createTask(Callable<T> methodToExecute, TaskType tType)`:
+Factory method to create a Task with a Callable and a TaskType.
+#### `public static <T> Task createTask(Callable<T> methodToExecute)`:
+Factory method to create a Task with a Callable.
+#### `public int getPriority()`:
+This method returns the priority of the Task through the TaskType priority.
+#### `public Object call() throws Exception`:
+Call method executes the method, may throw an exception from within the method to execute.
+#### `public TaskType getTaskType()`:
+Getter for TaskType.
+#### `public int compareTo(Task other)`:
+Comparing method with another Task.
+Returns 1 if this Task has the higher priority (lower value),  
+and -1 otherwise.
+#### `public boolean equals(Object o)`:
+Check if another object is a Task, with same Callable method and same TaskType.
+#### `public int hashCode()`:
+Returns the hashcode of the Task.
+
 
 ## Tests
 ### [Part 1](https://github.com/aradbm/OOP_Ex2/blob/master/src/test/Part1Test.java)
@@ -175,13 +247,19 @@ As expected, the ThreadPool solution came 1st with the fastest computing time,
 then the thread solution and lastly, the solution with no threads at all.  
 - However, it was a bit flappy, and sometimes the thread solution was head of the ThreadPool solution.  
 This may be a result of our CPU computing power or optimization issue.
-***
 
+### [Part 2](https://github.com/aradbm/OOP_Ex2/blob/master/src/test/Part1Test.java)
+#### test1
+
+#### test1
+
+***
 ## Acknowledgements\Bibliography
 
 - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
 - [An Introduction to Thread in Java](https://www.simplilearn.com/tutorials/java-tutorial/thread-in-java)
-
+- [ Custom ThreadPoolExecutor - beforeExecute()](https://howtodoinjava.com/java/multi-threading/how-to-use-blockingqueue-and-threadpoolexecutor-in-java/#1-creating-threadpoolexecutor)
+- 
 ***
 
 ## Feedback

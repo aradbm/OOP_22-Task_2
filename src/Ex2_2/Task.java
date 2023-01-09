@@ -2,8 +2,9 @@ package Ex2_2;
 
 import java.util.Objects;
 import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
-public class Task implements Callable<Object>, Comparable<Task> {
+public class Task<T> extends FutureTask<T> implements Callable<Object>, Comparable<Task<T>> {
     private final TaskType taskType;
     private final Callable<?> methodToExecute;
 
@@ -14,7 +15,8 @@ public class Task implements Callable<Object>, Comparable<Task> {
      * @param methodToExecute - the method we want the task to execute.
      * @param tType           - the task's type.
      */
-    private Task(Callable<?> methodToExecute, TaskType tType) {
+    private  Task(Callable<T> methodToExecute, TaskType tType) {
+        super(methodToExecute);
         this.taskType = tType;
         this.methodToExecute = methodToExecute;
     }
@@ -26,8 +28,8 @@ public class Task implements Callable<Object>, Comparable<Task> {
      * @param tType           - the task's type.
      * @return a new Task.
      */
-    public static <T> Task createTask(Callable<T> methodToExecute, TaskType tType) {
-        return new Task(methodToExecute, tType);
+    public static <T> Task<T> createTask(Callable<T> methodToExecute, TaskType tType) {
+        return new Task<>(methodToExecute, tType);
     }
 
     /**
@@ -35,8 +37,8 @@ public class Task implements Callable<Object>, Comparable<Task> {
      * @param methodToExecute - the method we want the task to execute.
      * @return a new Task.
      */
-    public static <T> Task createTask(Callable<T> methodToExecute) {
-        return new Task(methodToExecute, TaskType.OTHER);
+    public static <T> Task<T> createTask(Callable<T> methodToExecute) {
+        return new Task<>(methodToExecute, TaskType.OTHER);
     }
 
     /* ******************************** Return Tasks' Priority ********************************* */
@@ -56,7 +58,6 @@ public class Task implements Callable<Object>, Comparable<Task> {
      */
     @Override
     public Object call() throws Exception {
-        CustomExecutor.maxPriority[this.getPriority()]--;
         return this.methodToExecute.call();
     }
 
@@ -81,17 +82,16 @@ public class Task implements Callable<Object>, Comparable<Task> {
         return (other.getPriority() - this.getPriority()) > 0 ? 1 : -1;
     }
 
+    /* ******************************* Equals Method ********************************* */
     /**
      * @param o - object to check if equals to this task.
      * @return true if tasks are equal, false otherwise.
      */
-
-    /* ******************************* Equals Method ********************************* */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
+        Task<?> task = (Task<?>) o;
         return taskType == task.taskType && Objects.equals(methodToExecute, task.methodToExecute);
     }
 
@@ -102,5 +102,13 @@ public class Task implements Callable<Object>, Comparable<Task> {
     @Override
     public int hashCode() {
         return Objects.hash(taskType, methodToExecute);
+    }
+
+    /**
+     * @return string that represents this CustomExecutor.
+     */
+    @Override
+    public String toString() {
+        return "Task Priority: " + getPriority();
     }
 }
