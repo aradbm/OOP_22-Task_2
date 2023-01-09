@@ -251,11 +251,13 @@ This may be a result of our CPU computing power or optimization issue.
 ### [Part 2](https://github.com/aradbm/OOP_Ex2/blob/master/src/test/Part2Test.java)
 **Total Tests**
 ![App Screenshot](https://i.imgur.com/TWylMFK.png)
+
 All the tests we made worked great.  
 
 **CustomExecutor- partialTest**
 ![App Screenshot](https://i.imgur.com/yI9NHAi.png)
 ![App Screenshot](https://i.imgur.com/U5Fz23H.png)
+
 Here we can see that the results are what we expected.  
 The maximum priority at the moment we checked was 10 (the default) since all tasks who
 were in the queue were executed, making the queue empty at that moment.  
@@ -263,6 +265,7 @@ were in the queue were executed, making the queue empty at that moment.
 **CustomExecutor- Test1**
 ![App Screenshot](https://i.imgur.com/qnBbJPB.png)
 ![App Screenshot](https://i.imgur.com/qY9245t.png)
+
 Here we use the customExecutor ToString() which also prints us the Max Priority of
 the tasks which are currently in the queue, the priority array, and the blocking queue.  
 We can see that sometimes when printing the queue, it is empty since when we called ToString()
@@ -273,6 +276,7 @@ in the queue and the Max Priority is set to default which is 10.
 **CustomExecutor- Test2**
 ![App Screenshot](https://i.imgur.com/77DQuUc.png)
 ![App Screenshot](https://i.imgur.com/aIQHvpx.png)
+
 Here we use the customExecutor ToString() which also prints us the Max Priority of
 the tasks which are currently in the queue, the priority array, and the blocking queue.  
 We can see that each time, the queues' head has the lowest priority which mean the queue uses the
