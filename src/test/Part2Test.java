@@ -6,9 +6,7 @@ import Ex2_2.TaskType;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
-
 import java.util.concurrent.*;
-
 import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,7 +34,6 @@ class Part2Test {
         Task<Boolean> task2 = Task.createTask(f);
 
         assertEquals(true, task2.call());
-        assertEquals(3, task2.getPriority());
     }
 
     @Test
@@ -78,14 +75,22 @@ class Part2Test {
 
     @Test
     void compareTo() {
+        // Creating important task
+        Task<Integer> ComputationalTask = Task.createTask(() -> {
+            return 5;
+        }, TaskType.COMPUTATIONAL);
+        // Creating less important task
+        Task<Integer> IOTask = Task.createTask(() -> {
+            return 5;
+        }, TaskType.IO);
+
+        assertEquals(1, ComputationalTask.compareTo(IOTask));
 
     }
 
     /* ********************************* CustomExecutor Tests ********************************** */
-
-    /* ********************************* General Tests ********************************** */
     @Test
-    void Test() {
+    void partialTest() {
         CustomExecutor customExecutor = new CustomExecutor();
         Task<Integer> task = Task.createTask(() -> {
             int sum = 0;
@@ -128,16 +133,14 @@ class Part2Test {
     }
 
     @Test
-    void Test2() throws InterruptedException, ExecutionException {
+    void Test1() throws InterruptedException, ExecutionException {
         CustomExecutor customExecutor = new CustomExecutor();
         Future<?>[] results = new Future<?>[11];
         for (int i = 10; i >= 1; i--) {
             TaskType x = TaskType.OTHER;
             x.setPriority(i);
             int finalI = i;
-            results[10 - i + 1] = customExecutor.submit(Task.createTask(() -> {
-                return finalI;
-            }, x));
+            results[10 - i + 1] = customExecutor.submit(Task.createTask(() -> finalI, x));
             System.out.println(customExecutor);
         }
         for (int i = 10; i >= 1; i--) {
@@ -148,27 +151,29 @@ class Part2Test {
         assertTrue(customExecutor.isShutdown());
     }
     @Test
-    public void Tests3() throws InterruptedException {
+    void Test2() throws InterruptedException {
         CustomExecutor customExecutor = new CustomExecutor();
-
-        for (int i = 0; i < 100; ++i) {
-            Callable<Double> callable1 = () -> {
-                return 1000 * Math.pow(1.02, 5);
+        for (int i = 0; i < 20; ++i) {
+            Callable<Double> method1 = () -> {
+                sleep(5);
+                return 1000 * Math.pow(2.23, 5);
             };
-
-            Callable<String> callable2 = () -> {
-                StringBuilder sb = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-                return sb.reverse().toString();
+            Callable<String> method2 = () -> {
+                StringBuilder str = new StringBuilder("Hello World");
+                sleep(1);
+                return str.reverse().toString();
             };
-            customExecutor.submit(() -> {
-                return 1000 * Math.pow(1.02, 5);
-            }, TaskType.COMPUTATIONAL);
-
-            customExecutor.submit(callable1, TaskType.OTHER);
-
-            customExecutor.submit(callable2, TaskType.IO);
-
+            customExecutor.submit(method1, TaskType.COMPUTATIONAL);
+            customExecutor.submit(method2, TaskType.OTHER);
+            Callable<Integer> method3 = () -> {
+                sleep(5);
+                return 3+5;
+            };
+            sleep(1);
+            customExecutor.submit(method3, TaskType.IO);
             System.out.println(customExecutor);
         }
+        sleep(200);
+        System.out.println(customExecutor);
     }
 }

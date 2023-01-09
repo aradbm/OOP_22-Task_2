@@ -176,7 +176,7 @@ Thus, each instance has few fields:
 2. `static final int MIN_THREADS` - the minimum threads we allow.
 3. `static int[] maxPriority` - an array to keep track of the currently queued tasks and the maximum priority.
 4. `static BlockingQueue<Runnable> workingBlockingQueue` - a queue for tasks waiting to be executed.
-The queue keeps a priority based on the "compareTo" method in Task class.
+The queue keeps a priority based on the reverse Order.
 
 #### `CustomExecutor()`:
 Constructor.
@@ -248,10 +248,35 @@ then the thread solution and lastly, the solution with no threads at all.
 - However, it was a bit flappy, and sometimes the thread solution was head of the ThreadPool solution.  
 This may be a result of our CPU computing power or optimization issue.
 
-### [Part 2](https://github.com/aradbm/OOP_Ex2/blob/master/src/test/Part1Test.java)
-#### test1
+### [Part 2](https://github.com/aradbm/OOP_Ex2/blob/master/src/test/Part2Test.java)
+**Total Tests**
+![App Screenshot](https://i.imgur.com/TWylMFK.png)
+All the tests we made worked great.  
 
-#### test1
+**CustomExecutor- partialTest**
+![App Screenshot](https://i.imgur.com/yI9NHAi.png)
+![App Screenshot](https://i.imgur.com/U5Fz23H.png)
+Here we can see that the results are what we expected.  
+The maximum priority at the moment we checked was 10 (the default) since all tasks who
+were in the queue were executed, making the queue empty at that moment.  
+
+**CustomExecutor- Test1**
+![App Screenshot](https://i.imgur.com/qnBbJPB.png)
+![App Screenshot](https://i.imgur.com/qY9245t.png)
+Here we use the customExecutor ToString() which also prints us the Max Priority of
+the tasks which are currently in the queue, the priority array, and the blocking queue.  
+We can see that sometimes when printing the queue, it is empty since when we called ToString()
+of the queue, the tasks were already executed and pulled from the queue.  
+We can also see that lastly, the queue is empty and the priority array is all 0 since no task is
+in the queue and the Max Priority is set to default which is 10.  
+
+**CustomExecutor- Test2**
+![App Screenshot](https://i.imgur.com/77DQuUc.png)
+![App Screenshot](https://i.imgur.com/aIQHvpx.png)
+Here we use the customExecutor ToString() which also prints us the Max Priority of
+the tasks which are currently in the queue, the priority array, and the blocking queue.  
+We can see that each time, the queues' head has the lowest priority which mean the queue uses the
+comparator as we wished he had, and executes low priority tasks first.
 
 ***
 ## Acknowledgements\Bibliography
@@ -259,7 +284,7 @@ This may be a result of our CPU computing power or optimization issue.
 - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
 - [An Introduction to Thread in Java](https://www.simplilearn.com/tutorials/java-tutorial/thread-in-java)
 - [ Custom ThreadPoolExecutor - beforeExecute()](https://howtodoinjava.com/java/multi-threading/how-to-use-blockingqueue-and-threadpoolexecutor-in-java/#1-creating-threadpoolexecutor)
-- 
+
 ***
 
 ## Feedback

@@ -2,13 +2,12 @@ package Ex2_2;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.concurrent.*;
 
 public class CustomExecutor extends ThreadPoolExecutor {
     private static final int MAX_THREADS = Runtime.getRuntime().availableProcessors() - 1;
     private static final int MIN_THREADS = Runtime.getRuntime().availableProcessors() / 2;
-    static volatile int[] priorityArray;
+     int[] priorityArray;
     public static BlockingQueue<Runnable> workingBlockingQueue = new PriorityBlockingQueue<>(MIN_THREADS,
             Collections.reverseOrder());
 
@@ -91,8 +90,8 @@ public class CustomExecutor extends ThreadPoolExecutor {
     @Override
     protected void beforeExecute(Thread t, Runnable r) {
         Task<?> task = (Task<?>) r;
-        if (CustomExecutor.priorityArray[task.getPriority()] > 0)
-            --CustomExecutor.priorityArray[task.getPriority()];
+        if (priorityArray[task.getPriority()] > 0)
+            priorityArray[task.getPriority()]--;
     }
 
     /* ******************************* Hash Code Method ********************************* */
