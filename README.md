@@ -225,7 +225,7 @@ Returns the hashcode of the Task.
 
 ## Tests
 ### [Part 1](https://github.com/aradbm/OOP_Ex2/blob/master/src/test/Part1Test.java)
-![App Screenshot](https://i.ibb.co/JFJ7Jbd/Screenshot-2023-01-05-at-19-08-07.png)  
+![App Screenshot](https://i.imgur.com/Ph2cmQ6.png)  
 The times for each method we used to calculate:  
 __Without Threads:__
 ![App Screenshot](https://i.ibb.co/cwCGYDT/Screenshot-2023-01-05-at-19-08-55.png)
