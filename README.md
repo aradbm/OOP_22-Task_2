@@ -248,7 +248,8 @@ then the thread solution and lastly, the solution with no threads at all.
 - However, it was a bit flappy, and sometimes the thread solution was head of the ThreadPool solution.  
 This may be a result of our CPU computing power or optimization issue.
 
-### [Part 2](https://github.com/aradbm/OOP_Ex2/blob/master/src/test/Part2Test.java)
+### [Part 2](https://github.com/aradbm/OOP_Ex2/blob/master/src/test/Part2Test.java)  
+
 **Total Tests**
 ![App Screenshot](https://i.imgur.com/TWylMFK.png)
 
