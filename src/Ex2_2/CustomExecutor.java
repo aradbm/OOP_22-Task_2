@@ -7,7 +7,7 @@ import java.util.concurrent.*;
 public class CustomExecutor extends ThreadPoolExecutor {
     private static final int MAX_THREADS = Runtime.getRuntime().availableProcessors() - 1;
     private static final int MIN_THREADS = Runtime.getRuntime().availableProcessors() / 2;
-     int[] priorityArray;
+    int[] priorityArray;
     public static BlockingQueue<Runnable> workingBlockingQueue = new PriorityBlockingQueue<>(MIN_THREADS,
             Collections.reverseOrder());
 
@@ -83,15 +83,23 @@ public class CustomExecutor extends ThreadPoolExecutor {
      */
     public void gracefullyTerminate() {
         super.shutdown();
+        try {
+            if (!super.awaitTermination(10, TimeUnit.SECONDS)) {
+                System.err.println("Tasks didn't finish in 10 seconds!");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /* ************************* Before Each Execution Update Priority Array ************************* */
 
     @Override
     protected void beforeExecute(Thread t, Runnable r) {
-        Task<?> task = (Task<?>) r;
-        if (priorityArray[task.getPriority()] > 0)
-            priorityArray[task.getPriority()]--;
+        if (r instanceof Task<?> task) {
+            if (priorityArray[task.getPriority()] > 0)
+                priorityArray[task.getPriority()]--;
+        }
     }
 
     /* ******************************* Hash Code Method ********************************* */
